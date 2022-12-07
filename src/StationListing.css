@@ -1,0 +1,31 @@
+.divbtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.nav{
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    padding: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 22px;
+    background-color: #fff;
+    ;
+
+}
+
+.table-tr:hover {
+    transform: scale(1.0001);
+    background-color: #c4d4ab;
+}
+
+#station{
+    background-color: #c4d4ab;
+    color: #282926;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    margin: 5px;
+    text-align: center;
+}
+

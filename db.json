@@ -1,0 +1,52 @@
+{
+  "employee": [
+    {
+      "name": "mustafa",
+      "il": "yıldız",
+      "ilce": "123",
+      "active": true,
+      "address": "sunar sokak no 5",
+      "id": 7
+    },
+    {
+      "name": "a",
+      "il": "dlfjsnf",
+      "ilce": "1555",
+      "active": true,
+      "id": 8,
+      "address": "sunar sokak no 5"
+    },
+    {
+      "name": "KARTAL",
+      "il": "İSTANBUL",
+      "ilce": "kartal",
+      "active": true,
+      "id": 9,
+      "address": "sunar sokak no 5"
+    },
+    {
+      "name": "asd",
+      "il": "asd",
+      "ilce": "dasw",
+      "address": "qw",
+      "id": 10
+    },
+    {
+      "name": "kartal",
+      "il": "ben",
+      "ilce": "sen ",
+      "address": "o",
+      "id": 11
+    }
+  ],
+  "Employees": [
+    {
+      "id": 12,
+      "name": "mustafa",
+      "surName": "yıldız",
+      "phone": "056489849",
+      "mail": "haha@gmail.com",
+      "password": "123123"
+    }
+  ]
+}
