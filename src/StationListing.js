@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,React,useContext} from "react";
 import { Link, useNavigate ,NavLink} from "react-router-dom";
 import "./StationListing.css";
 import { FaEdit, FaTrash, FaInfo } from "react-icons/fa";
 import {motion} from 'framer-motion'
-
-
+import { myContext } from "./ContextProvider";
 function StationListing() {
+
+  const {API}=useContext(myContext)
+
+
   const [data, dataChange] = useState([]);
 
   const navigate = useNavigate();
@@ -22,7 +25,7 @@ function StationListing() {
 
   const Removefunction = (id) => {
     if (window.confirm("Do you want to remove?")) {
-      fetch("http://localhost:8000/employee/" + id, {
+      fetch(API+"Station/delete/"+ id, {
         method: "DELETE",
       })
         .then((res) => {
@@ -48,8 +51,9 @@ function StationListing() {
   );
 
   useEffect(() => {
-    fetch("http://localhost:8000/employee")
+    fetch(API+'Station/getall')
       .then((res) => {
+        console.log(API)
         return res.json();
       })
       .then((resp) => {

@@ -2,41 +2,43 @@ import { useState ,useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {motion} from 'framer-motion'
 import { AiFillCloseCircle } from "react-icons/ai";
-import "./StationCreate.css"
-import { myContext } from "./ContextProvider";
-
-const StationCreate = () => {
-    const {API}=useContext(myContext)
+import "./EmployeesCreate.css"
+import { myContext } from "../ContextProvider";
 
 
-    const[id,idchange]=useState("");
-    const[name,namechange]=useState("");
-    const[il,ilChange]=useState("");
-    const[ilce,ilceChange]=useState("");
-    const[adres,adresChange]=useState("");
+const EmployeesCreate = () => {
+
+    const { API } = useContext(myContext);
+
+
+    const[id,idChange]=useState("");
+    const[nameSurname,nameChange]=useState("");
+    const[phone,phoneChange]=useState("");
+    const[mail,mailChange]=useState("");
+    const[password,passwordChange]=useState("");
     const[validation,valchange]=useState(false);
+    
 
 
     const navigate=useNavigate();
 
     const handlesubmit=(e)=>{
       e.preventDefault();
-      const empdata={name,ilce,adres,il};
-      
-
-      fetch(API+"Station/add",{
+      const empdata={id,nameSurname,phone,mail,password};
+    
+      fetch(API+"Employee/add",{
         method:"POST",
         headers:{"content-type":"application/json"},
         body:JSON.stringify({
-            name:name,
-            ilce:ilce,
-            address:adres,
-            il:il
-
+            nameSurname:nameSurname,
+            email:mail,
+            password:password,
+            phone:phone,
+            status:"offline"
         })
       }).then((res)=>{
         alert('Saved successfully.')
-        navigate('/');
+        navigate('/Employees');
       }).catch((err)=>{
         console.log(err.message)
       })
@@ -55,8 +57,8 @@ const StationCreate = () => {
 
                         <div className="card" style={{"textAlign":"left"}}>
                             <div className="card-title">
-                                <h2>İstasyon Oluştur</h2>
-                                <Link to="/" ><AiFillCloseCircle className="back" /></Link>
+                                <h2>Employee Create</h2>
+                                <Link to="/Employees" ><AiFillCloseCircle className="back" /></Link>
                             </div>
                             <div className="card-body">
                                 <div className="row">
@@ -68,16 +70,17 @@ const StationCreate = () => {
                                     </div>
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="Name"  required value={name} onMouseDown={e=>valchange(true)} onChange={e=>namechange(e.target.value)} className="form-control"></input>
-                                        {name.length==0 && validation && <span className="text-danger">Enter the name</span>}
+                                            <input placeholder="Ad Soyad"  required value={nameSurname} onMouseDown={e=>valchange(true)} onChange={e=>nameChange(e.target.value)} className="form-control"></input>
+                                        {nameSurname.length==0 && validation && <span className="text-danger">Enter the name</span>}
                                         <br></br>
 
                                         </div>
                                     </div>
+                               
 
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="İl" value={il} onChange={e=>ilChange(e.target.value)} className="form-control"></input>
+                                            <input placeholder="Phone" value={phone} onChange={e=>phoneChange(e.target.value)} className="form-control"></input>
                                             <br></br>
 
                                         </div>
@@ -85,7 +88,7 @@ const StationCreate = () => {
 
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="İlçe" value={ilce} onChange={e=>ilceChange(e.target.value)} className="form-control"></input>
+                                            <input placeholder="Mail" value={mail} onChange={e=>mailChange(e.target.value)} className="form-control"></input>
                                             <br></br>
 
                                         </div>
@@ -93,7 +96,7 @@ const StationCreate = () => {
                                     
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="Adres" value={adres} onChange={e=>adresChange(e.target.value)} className="form-control"></input>
+                                            <input placeholder="password" value={password} onChange={e=>passwordChange(e.target.value)} className="form-control"></input>
                                             <br></br>
 
                                         </div>
@@ -102,7 +105,7 @@ const StationCreate = () => {
                              
                                     <div className="col-lg-12">
                                         <div className="form-group" id="save-button">
-                                           <button className="btn btn-success" type="submit" id="button-save">İstasyon Kaydet</button>
+                                           <button className="btn btn-success" type="submit" id="button-save">Kaydet</button>
                                         </div>
                                     </div>
 
@@ -120,4 +123,4 @@ const StationCreate = () => {
     );
 }
 
-export default StationCreate;
+export default EmployeesCreate;

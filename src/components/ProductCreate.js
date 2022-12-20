@@ -1,19 +1,22 @@
 import { useState ,useContext} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import {motion} from 'framer-motion'
 import { AiFillCloseCircle } from "react-icons/ai";
-import "./StationCreate.css"
-import { myContext } from "./ContextProvider";
+import "./ProductCreate.css"
+import { myContext } from "../ContextProvider";
 
-const StationCreate = () => {
+const ProductCreate = () => {
     const {API}=useContext(myContext)
 
+    const { empid } = useParams();
 
-    const[id,idchange]=useState("");
-    const[name,namechange]=useState("");
-    const[il,ilChange]=useState("");
-    const[ilce,ilceChange]=useState("");
-    const[adres,adresChange]=useState("");
+    const[id,idChange]=useState("");
+    const[name,nameChange]=useState("");
+    const[status,statusChange]=useState("");
+    const[macAddress,macAddressChange]=useState("");
+    const[ipAddress,ipAddressChange]=useState("");
+
+
     const[validation,valchange]=useState(false);
 
 
@@ -21,22 +24,22 @@ const StationCreate = () => {
 
     const handlesubmit=(e)=>{
       e.preventDefault();
-      const empdata={name,ilce,adres,il};
+      const empdata={name,macAddress,ipAddress,empid,status};
       
 
-      fetch(API+"Station/add",{
+      fetch(API+"Device/add",{
         method:"POST",
         headers:{"content-type":"application/json"},
         body:JSON.stringify({
             name:name,
-            ilce:ilce,
-            address:adres,
-            il:il
-
+            macAddress:macAddress,
+            ipAddress:ipAddress,
+            stationId:empid,
+            status:status
         })
       }).then((res)=>{
         alert('Saved successfully.')
-        navigate('/');
+        navigate('/employee/detail/'+empid);
       }).catch((err)=>{
         console.log(err.message)
       })
@@ -55,7 +58,7 @@ const StationCreate = () => {
 
                         <div className="card" style={{"textAlign":"left"}}>
                             <div className="card-title">
-                                <h2>İstasyon Oluştur</h2>
+                                <h2>Cihaz Create</h2>
                                 <Link to="/" ><AiFillCloseCircle className="back" /></Link>
                             </div>
                             <div className="card-body">
@@ -68,7 +71,7 @@ const StationCreate = () => {
                                     </div>
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="Name"  required value={name} onMouseDown={e=>valchange(true)} onChange={e=>namechange(e.target.value)} className="form-control"></input>
+                                            <input placeholder="Ad"  required value={name} onMouseDown={e=>valchange(true)} onChange={e=>nameChange(e.target.value)} className="form-control"></input>
                                         {name.length==0 && validation && <span className="text-danger">Enter the name</span>}
                                         <br></br>
 
@@ -77,7 +80,7 @@ const StationCreate = () => {
 
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="İl" value={il} onChange={e=>ilChange(e.target.value)} className="form-control"></input>
+                                            <input placeholder="Mac Address" value={macAddress} onChange={e=>macAddressChange(e.target.value)} className="form-control"></input>
                                             <br></br>
 
                                         </div>
@@ -85,24 +88,26 @@ const StationCreate = () => {
 
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="İlçe" value={ilce} onChange={e=>ilceChange(e.target.value)} className="form-control"></input>
+                                            <input placeholder="Ip Adress" value={ipAddress} onChange={e=>ipAddressChange(e.target.value)} className="form-control"></input>
                                             <br></br>
 
                                         </div>
                                     </div>
-                                    
+
+
                                     <div className="col-lg-12">
                                         <div className="form-group">
-                                            <input placeholder="Adres" value={adres} onChange={e=>adresChange(e.target.value)} className="form-control"></input>
+                                            <input placeholder="Status" value={status} onChange={e=>statusChange(e.target.value)} className="form-control"></input>
                                             <br></br>
 
                                         </div>
                                     </div>
+
 
                              
                                     <div className="col-lg-12">
                                         <div className="form-group" id="save-button">
-                                           <button className="btn btn-success" type="submit" id="button-save">İstasyon Kaydet</button>
+                                           <button className="btn btn-success" type="submit" id="button-save">Kaydet</button>
                                         </div>
                                     </div>
 
@@ -120,4 +125,4 @@ const StationCreate = () => {
     );
 }
 
-export default StationCreate;
+export default ProductCreate;

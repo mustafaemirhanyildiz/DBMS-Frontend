@@ -1,0 +1,39 @@
+.card-title{
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 16px;
+    background-color:#c4d4ab ;
+    color: #282926;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 22px;
+
+}
+
+.back{
+    margin-right: 5px;
+    margin-top: 8px;
+    width: 24px;
+    height: 24px;
+    color: #282926;
+}
+
+.back:hover{
+    color: rgb(206, 20, 20);
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#save-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
+#button-save:hover{
+    background-color: #c4d4ab;
+}

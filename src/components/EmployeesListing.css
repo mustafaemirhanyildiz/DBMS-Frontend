@@ -30,5 +30,12 @@ table-tr:hover {
     text-align: center;
 }
 
+#crud a{
+    margin-left: 10px;
+}
+#crud{
+    width: 200px;
+}
+
 
 

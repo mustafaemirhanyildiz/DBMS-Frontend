@@ -1,28 +1,26 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate ,NavLink} from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import "./EmployeesListing.css";
 import { FaEdit, FaTrash, FaInfo } from "react-icons/fa";
-import {motion} from 'framer-motion'
-
+import { motion } from "framer-motion";
+import { myContext } from "../ContextProvider";
 
 function EmployeesListing() {
+  const { API } = useContext(myContext);
+
   const [data, dataChange] = useState([]);
 
   const navigate = useNavigate();
 
   const [searchInput, setSearchInput] = useState("");
 
-  const LoadDetail = (id) => {
-    navigate("/employee/detail/" + id);
-  };
-
   const LoadEdit = (id) => {
-    navigate("/employee/edit/" + id);
+    navigate("/Employees/edit/" + id);
   };
 
   const Removefunction = (id) => {
     if (window.confirm("Do you want to remove?")) {
-      fetch("http://localhost:8000/employee/" + id, {
+      fetch(API+"Employee/delete/" + id, {
         method: "DELETE",
       })
         .then((res) => {
@@ -38,17 +36,15 @@ function EmployeesListing() {
   const handleChange = (e) => {
     setSearchInput(e.target.value);
   };
-
-  const newdata = data.filter((item) =>
-    item.name.toLowerCase().includes(searchInput.toLowerCase())
-  );
-
+   
+ 
   useEffect(() => {
-    fetch("http://localhost:8000/Employees")
+    fetch(API + "Employee/getall")
       .then((res) => {
         return res.json();
       })
       .then((resp) => {
+        console.log(resp);
         dataChange(resp);
       })
       .catch((err) => {
@@ -56,11 +52,13 @@ function EmployeesListing() {
       });
   }, []);
 
+
+
   return (
-    <motion.div 
-    initial={{width:0}}
-    animate={{width:"100%"}}
-    exit={{x:window.innerWidth,transition :{duration:0.2}}}
+    <motion.div
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
     >
       <div className="nav"></div>
       <div className="container">
@@ -75,7 +73,11 @@ function EmployeesListing() {
                 onChange={handleChange}
               />
 
-              <Link to="employee/create" className="btn btn-success" id="employee">
+              <Link
+                to="employee/create"
+                className="btn btn-success"
+                id="employee"
+              >
                 Yeni Personel Ekle
               </Link>
             </div>
@@ -83,8 +85,7 @@ function EmployeesListing() {
               <thead className="bg-success text-white">
                 <tr>
                   <td>#</td>
-                  <td>Ad</td>
-                  <td>Soyad</td>
+                  <td>Ad-Soyad</td>
                   <td>Telefon</td>
                   <td>Mail</td>
                   <td>Şifre</td>
@@ -92,15 +93,14 @@ function EmployeesListing() {
                 </tr>
               </thead>
               <tbody>
-                {newdata.map((item) => (
+                {data.map((item) => (
                   <tr key={item.id} className="table-tr">
                     <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.surName}</td>
+                    <td>{item.nameSurname}</td>
                     <td>{item.phone}</td>
-                    <td>{item.mail}</td>
+                    <td>{item.email}</td>
                     <td>{item.password}</td>
-                    <td>
+                    <td id="crud">
                       <a
                         onClick={() => {
                           LoadEdit(item.id);
@@ -116,14 +116,6 @@ function EmployeesListing() {
                         className="btn btn-danger"
                       >
                         <FaTrash />
-                      </a>
-                      <a
-                        onClick={() => {
-                          LoadDetail(item.id);
-                        }}
-                        className="btn btn-primary"
-                      >
-                        <FaInfo />
                       </a>
                     </td>
                   </tr>

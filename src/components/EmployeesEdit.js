@@ -1,52 +1,49 @@
-import { useEffect, useState ,useContext} from "react";
+import { useEffect, useState,useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {motion} from 'framer-motion'
 import { AiFillCloseCircle } from "react-icons/ai";
-import "./StationEdit.css"
-import { myContext } from "./ContextProvider";
+import "./EmployeesEdit.css"
+import { myContext } from "../ContextProvider";
 
-
-const StationEdit = () => {
+const EmployeesEdit = () => {
     const { empid } = useParams();
-    const {API}=useContext(myContext)
-
+    const { API } = useContext(myContext);
 
     useEffect(() => {
-        fetch(API+"Station/getbyid/" + empid).then((res) => {
+        fetch(API+"Employee/getbyid/" + empid).then((res) => {
             return res.json();
         }).then((resp) => {
-            idchange(resp.id);
-            namechange(resp.name);
-            ilchange(resp.il);
-            ilcechange(resp.ilce);
-            addressChange(resp.address)
+            idChange(resp.id);
+            nameChange(resp.nameSurname);
+            phoneChange(resp.phone);
+            emailChange(resp.email)
+            passwordChange(resp.password)
         }).catch((err) => {
             console.log(err.message);
         })
     }, []);
 
-    const[id,idchange]=useState("");
-    const[name,namechange]=useState("");
-    const[il,ilchange]=useState("");
-    const[ilce,ilcechange]=useState("");
-    const[address,addressChange]=useState("");
+    const[id,idChange]=useState("");
+    const[nameSurname,nameChange]=useState("");
+    const[phone,phoneChange]=useState("");
+    const[email,emailChange]=useState("");
+    const[password,passwordChange]=useState("");
+    const[validation,valChange]=useState(false);
 
-    const[validation,valchange]=useState(false);
-
-
+    const status="offline"
     const navigate=useNavigate();
 
     const handlesubmit=(e)=>{
       e.preventDefault();
-      const empdata={id,name,il,ilce,address};
+      const empdata={id,nameSurname,email,password,phone,status};
       
 
-      fetch(API+"Station/update",{
+      fetch(API+"Employee/update",{
         method:"PUT",
         headers:{"content-type":"application/json"},
         body:JSON.stringify(empdata)
       }).then((res)=>{
-        navigate('/');
+        navigate('/Employees');
       }).catch((err)=>{
         console.log(err.message)
       })
@@ -64,53 +61,50 @@ const StationEdit = () => {
                 <form className="container" onSubmit={handlesubmit}>
                     <div className="card" style={{"textAlign":"left"}}>
                         <div className="card-title">
-                            <h2>İstasyon Edit</h2>
-                            <Link to="/" ><AiFillCloseCircle className="back" /></Link>
+                            <h2>Çalışan Edit</h2>
+                            <Link to="/Employees" ><AiFillCloseCircle className="back" /></Link>
 
                         </div>
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-lg-12">
                                     <div className="form-group">
-                                        <label>İstasyon İd</label>
+                                        <label>İd</label>
                                         <input value={id} disabled="disabled" className="form-control" placeholder="#"></input>
                                     </div>
                                 </div>
 
                                 <div className="col-lg-12">
                                     <div className="form-group">
-                                        <label>İstasyon Adı</label>
-                                        <input required value={name} onMouseDown={e=>valchange(true)} onChange={e=>namechange(e.target.value)} className="form-control"></input>
-                                    {name.length==0 && validation && <span className="text-danger">Enter the name</span>}
+                                        <label>Ad</label>
+                                        <input required value={nameSurname} onMouseDown={e=>valChange(true)} onChange={e=>nameChange(e.target.value)} className="form-control"></input>
+                                    {nameSurname.length==0 && validation && <span className="text-danger">Enter the name</span>}
                                     </div>
                                 </div>
-
                                 <div className="col-lg-12">
                                     <div className="form-group">
-                                        <label>İl</label>
-                                        <input value={il} onChange={e=>ilchange(e.target.value)} className="form-control"></input>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-12">
-                                    <div className="form-group">
-                                        <label>İlçe</label>
-                                        <input value={ilce} onChange={e=>ilcechange(e.target.value)} className="form-control"></input>
+                                        <label>Telefon</label>
+                                        <input value={phone} onChange={e=>phoneChange(e.target.value)} className="form-control"></input>
                                     </div>
                                 </div>
                                 
                                 <div className="col-lg-12">
                                     <div className="form-group">
-                                        <label>Address</label>
-                                        <input value={address} onChange={e=>addressChange(e.target.value)} className="form-control"></input>
+                                        <label>email</label>
+                                        <input value={email} onChange={e=>emailChange(e.target.value)} className="form-control"></input>
+                                    </div>
+                                </div>
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                        <label>password</label>
+                                        <input value={password} onChange={e=>passwordChange(e.target.value)} className="form-control"></input>
                                         <br></br>
                                     </div>
                                 </div>
-
                 
                                 <div className="col-lg-12">
                                     <div className="form-group" id="save-button">
-                                       <button className="btn btn-success" type="submit" id="button-save">İstasyon Edit</button>
+                                       <button className="btn btn-success" type="submit" id="button-save">Edit</button>
                                     </div>
                                 </div>
                                 
@@ -124,4 +118,4 @@ const StationEdit = () => {
      );
 }
  
-export default StationEdit;
+export default EmployeesEdit;

@@ -41,12 +41,12 @@
   ],
   "Employees": [
     {
-      "id": 12,
-      "name": "mustafa",
-      "surName": "yıldız",
-      "phone": "056489849",
-      "mail": "haha@gmail.com",
-      "password": "123123"
+      "id": 13,
+      "name": "asd",
+      "surName": "asd",
+      "phone": "asd",
+      "mail": "asd",
+      "password": "asd"
     }
   ]
 }
